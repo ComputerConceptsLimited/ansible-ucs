@@ -1,0 +1,49 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Adding Vlan {{ ucsm_ip }}
+      ucs_vlan:
+        ip={{ucsm_ip}}
+        login={{ucsm_login}}
+        password={{ucsm_pw}}
+        vlan_name='vlan_'
+        vlan_id='10'
+        mcast_policy_name=''
+        policy_owner='local'
+
+    - name: Add Single VLAN Seperate FI A/B {{ ucsm_ip }}
+      ucs_vlan:
+        ip={{ucsm_ip}}
+        login={{ucsm_login}}
+        password={{ucsm_pw}}
+        vlan_name="vlan_"
+        mcast_policy_name="default"
+        policy_owner="local"
+        configure_lan_seperate='yes'
+        vlan_a='199'
+        vlan_b='299'
+
+    - name: Adding VLAN Range Combined LAN Cloud {{ ucsm_ip }}
+      ucs_vlan:
+        ip={{ucsm_ip}}
+        login={{ucsm_login}}
+        password={{ucsm_pw}}
+        vlan_name='vlan_'
+        vlan_range="11-20"
+        mcast_policy_name="default"
+        policy_owner="local"
+
+    - name: Adding VLAN Range FI A/B Seperate {{ ucsm_ip }}
+      ucs_vlan:
+        ip={{ucsm_ip}}
+        login={{ucsm_login}}
+        password={{ucsm_pw}}
+        vlan_name='vlan_'
+        mcast_policy_name="default"
+        policy_owner="local"
+        configure_lan_seperate="yes"
+        vlan_a_range="300-310"
+        vlan_b_range="200-210"

@@ -1,0 +1,19 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Add SNMP Trap {{ucsm_ip}}
+    ucs_snmp:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      v3_priv='noauth'
+      hostname='192.168.1.1'
+      community='test'
+      version='v3'
+      notify_type='traps'
+      port='162'
+
+

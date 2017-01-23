@@ -1,0 +1,17 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Configure/Enable SNMP {{ucsm_ip}}
+    ucs_configure_snmp:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      sys_location='Raleigh NC'
+      community='community'
+      admin_state='disabled'
+      sys_contact='Bdub'
+
+

@@ -1,0 +1,18 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Adding VLAN Range FI A/B Seperate {{ vlan_a_range }} {{ vlan_b_range }} {{ ucsm_ip }}
+    ucs_vlan:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      vlan_name='vlan_'
+      mcast_policy_name="default"
+      policy_owner="local"
+      configure_lan_seperate="yes"
+      vlan_a_range="300-310"
+      vlan_b_range="200-210"
+

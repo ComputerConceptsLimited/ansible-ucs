@@ -1,0 +1,2 @@
+# file: site.yml
+- include: plays/test_vlan.yml

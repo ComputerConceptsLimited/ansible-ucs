@@ -1,0 +1,9 @@
+
+*.iml
+
+*.xml
+
+*.retry
+
+/inventory
+/ansible.cfg

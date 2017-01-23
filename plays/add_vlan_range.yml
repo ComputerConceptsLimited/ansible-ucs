@@ -1,0 +1,16 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Adding VLAN Range Combined LAN Cloud {{ ucsm_ip }}
+    ucs_vlan:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      vlan_name='vlan_'
+      vlan_range="11-20"
+      mcast_policy_name="default"
+      policy_owner="local"
+

@@ -1,0 +1,26 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Configure Callhome {{ucsm_ip}}
+    ucs_callhome:
+      admin_state="on"
+      urgency="warning"
+      throttle_state="on"
+      contact="Brian Hopkins"
+      phone="+1123-123-1234"
+      email="email@test.com"
+      addr="123 Test Drive"
+      customer="1234"
+      contract="12345"
+      site="123"
+      r_from="email_from@test.com"
+      reply_to="email_to@test.com"
+      host="192.168.1.1"
+      port="25"
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+
