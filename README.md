@@ -13,7 +13,8 @@ Feel free to join chat for questions or enhancement requests:
 https://ucsmansibleautomation.slack.com/
 
 ### Usage
-### Update library/inventory file with UCSM login info.  Move the library/ucs.py file to your ansible/lib/module-utils folder for this to work.
+* Update library/inventory file with UCSM login info.  
+* Move the library/ucs.py file to your ansible/lib/module-utils folder for this to work.
 
 #### To run a playbook:
 ansible-playbook site.yml
