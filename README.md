@@ -45,7 +45,6 @@ PLAY RECAP *********************************************************************
 ucspe                      : ok=6    changed=2    unreachable=0    failed=0
 
 ### Current Playbooks/Supported Modules
-Currently support following configurations:
 * configuring of callhome
 * disabling of callhome
 * enabling/disabling snmp
