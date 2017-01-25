@@ -14,7 +14,7 @@ https://ucsmansibleautomation.slack.com/
 
 ### Usage
 * Update library/inventory file with UCSM login info.  
-* Move the library/ucs.py file to your ansible/lib/module-utils folder for this to work.
+* Run the command and include where the full location where you put ansible-ucs repo: export PYTHONPATH=”${PYTHONPATH}:/ansible-ucs"
 
 #### To run a playbook:
 ansible-playbook site.yml
