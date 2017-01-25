@@ -115,7 +115,7 @@ EXAMPLES = '''
 
 
 from ucsmsdk.mometa.fabric.FabricVlan import FabricVlan
-from ansible.module_utils.ucs import UCS
+from library.ucs import UCS
 
 
 def ucs_add_vlan(module):

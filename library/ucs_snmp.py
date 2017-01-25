@@ -101,7 +101,7 @@ EXAMPLES = '''
 
 from ucsmsdk.mometa.comm.CommSnmp import CommSnmp
 from ucsmsdk.mometa.comm.CommSnmpTrap import CommSnmpTrap
-from ansible.module_utils.ucs import UCS
+from library.ucs import UCS
 
 def ucs_disable_snmp(module):
     ucsm_ip = module.params.get('ip')

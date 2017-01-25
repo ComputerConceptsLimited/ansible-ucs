@@ -112,7 +112,7 @@ EXAMPLES = '''
 
 from ucsmsdk.mometa.callhome.CallhomeSmtp import CallhomeSmtp
 from ucsmsdk.mometa.callhome.CallhomeSource import CallhomeSource
-from ansible.module_utils.ucs import UCS
+from library.ucs import UCS
 
 def ucs_callhome(module):
     admin_state = module.params.get('admin_state')
