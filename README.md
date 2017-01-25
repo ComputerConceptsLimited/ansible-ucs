@@ -10,7 +10,7 @@ https://communities.cisco.com/docs/DOC-64378
 ### UCS Ansible Slack Chat
 Feel free to join chat for questions or enhancement requests:
 
-https://ucsmansibleautomation.slack.com/
+http://tiny.cc/ucsm-slack
 
 ### Usage
 * Update library/inventory file with UCSM login info.  
