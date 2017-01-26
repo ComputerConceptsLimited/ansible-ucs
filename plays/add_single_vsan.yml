@@ -4,7 +4,7 @@
   gather_facts: no
 
   tasks:
-  - name: Adding VSAN {{ ucsm_ip }}
+  - name: Adding Single VSAN to both FI's {{ ucsm_ip }}
     ucs_vsan:
       ip={{ucsm_ip}}
       login={{ucsm_login}}
@@ -14,3 +14,15 @@
       fcoe_vlan='11'
       fc_zone_mode='coalesce'
       zoning_state='disabled'
+
+  - name: Adding Single VSAN to FI A {{ ucsm_ip }}
+    ucs_vsan:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      vsan_name='12'
+      vsan_id='12'
+      fcoe_vlan='12'
+      fc_zone_mode='coalesce'
+      zoning_state='disabled'
+      configured_fi='fabric/san/A'
