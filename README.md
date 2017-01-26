@@ -14,7 +14,7 @@ http://tiny.cc/ucsm-slack
 
 ### Usage
 * Update library/inventory file with UCSM login info.  
-* Run the command and include where the full location where you put ansible-ucs repo: export PYTHONPATH=”${PYTHONPATH}:/ansible-ucs"
+* Run the command and include where the full location where you put ansible-ucs repo: export PYTHONPATH="${PYTHONPATH}:/ansible-ucs"
 
 #### To run a playbook:
 ansible-playbook site.yml
