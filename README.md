@@ -53,6 +53,10 @@ ucspe                      : ok=6    changed=2    unreachable=0    failed=0
 * adding VLAN's
 * adding DNS Server IP
 * removing DNS Server IP
+* adding NTP server
+* remove NTP server
 
-### Playbooks Coming Soon
-NTP configuration, and more system management configuration
+### Playbooks/Modules Coming Soon
+Uplink Configuration
+Interface Configuration
+vNic Template Creation
