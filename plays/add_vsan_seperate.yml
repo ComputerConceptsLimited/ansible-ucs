@@ -9,8 +9,10 @@
       ip={{ucsm_ip}}
       login={{ucsm_login}}
       password={{ucsm_pw}}
-      vsan_name='11'
-      vsan_id='11'
-      fcoe_vlan='11'
+      vsan_name='FCoE'
+      vsan_id_a='20'
+      vsan_id_b='30'
+      fcoe_vlan_a='20'
+      fcoe_vlan_b='30'
       fc_zone_mode='coalesce'
       zoning_state='disabled'
