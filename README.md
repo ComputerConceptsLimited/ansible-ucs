@@ -49,6 +49,8 @@ ucspe                      : ok=6    changed=2    unreachable=0    failed=0
 * disabling of callhome
 * enabling/disabling snmp
 * adding snmp traps
+* adding VSAN's
+* adding VLAN's
 
 ### Playbooks Coming Soon
 NTP configuration, and more system management configuration
