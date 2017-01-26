@@ -7,15 +7,107 @@ ANSIBLE_METADATA = {'status': ['preview'],
 
 
 DOCUMENTATION = '''
-
-
+---
+module: ucs_vsan
+version_added: "2.2"
+short_description: Manages VSAN resource additions.
+description:
+    - Manages VSAN configurations on UCS Manager instances.
+author: Brian Hopkins (@br1anhopkins)
+extends_documentation_fragment: ucs
+options:
+    vsan_name:
+        description:
+            - The VSAN name that is being created
+        required: true
+        default: null
+    vsan_id:
+        description:
+            - The VSAN id when adding a single VSAN to either both FI's or to A or B.
+        required: true
+        default: null
+    fcoe_vlan:
+        description:
+            - The FCoE vlan for the VSAN being created if doing a single VSAN.
+        required: true
+        default: false
+    fc_zone_mode:
+        description:
+            - The zone sharing mode, this by default is coalesce and shouldn't need to be changed.
+        required: true
+        default: coalesce
+        choices: ['disabled', 'enabled']
+    zoning_state:
+        description:
+            - The zoning state for the VSAN, this is either enabled or disabled.
+        default: disabled
+        choices: ['disabled', 'enabled']
+    vsan_id_a:
+        description:
+            - The VSAN ID to be created on FI A, this is used for creating VSAN seperately per FI.
+        required: false
+        default: null
+    vsan_id_b:
+        description:
+            - The VSAN ID to be created on FI B, this is used for creating VSAN seperately per FI.
+        required: false
+        default: null
+    fcoe_vlan_a:
+        description:
+            - The FcoE VLAN for the VSAN created on FI A, this is used for creating VSAN/FCoE VLAN seperately per FI
+        required: false
+        default: null
+    fcoe_vlan_b:
+        description:
+            - The FcoE VLAN for the VSAN created on FI B, this is used for creating VSAN/FCoE VLAN seperately per FI
+        required: false
+        default: null
+    configured_fi:
+        description:
+            - This flag is used for creating a VSAN only on 1 specific FI, use this flag to specify which FI.
+        required: false
+        default: null
+        choices: ['fabric/san/A', 'fabric/san/B']
 
 '''
 
 
 EXAMPLES = '''
+- name: Adding Single VSAN to both FI's {{ ucsm_ip }}
+    ucs_vsan:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      vsan_name='11'
+      vsan_id='11'
+      fcoe_vlan='11'
+      fc_zone_mode='coalesce'
+      zoning_state='disabled'
 
+- name: Adding Single VSAN to FI A {{ ucsm_ip }}
+    ucs_vsan:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      vsan_name='12'
+      vsan_id='12'
+      fcoe_vlan='12'
+      fc_zone_mode='coalesce'
+      zoning_state='disabled'
+      configured_fi='fabric/san/A'
 
+- name: Adding VSAN 10 to FI A, VSAN 20 to FI B {{ ucsm_ip }}
+    ucs_vsan:
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      vsan_name='FcoE'
+      vsan_id_a='10'
+      vsan_id_b='20'
+      fcoe_vlan_a='10'
+      fcoe_vlan_b='20'
+      zoning_state='disabled'
+      fc_zone_mode='coalesce'
 '''
 
 

@@ -4,15 +4,15 @@
   gather_facts: no
 
   tasks:
-  - name: Adding VSAN {{ ucsm_ip }}
+  - name: Adding VSAN 10 to FI A, VSAN 20 to FI B {{ ucsm_ip }}
     ucs_vsan:
       ip={{ucsm_ip}}
       login={{ucsm_login}}
       password={{ucsm_pw}}
-      vsan_name='FCoE'
-      vsan_id_a='20'
-      vsan_id_b='30'
-      fcoe_vlan_a='20'
-      fcoe_vlan_b='30'
-      fc_zone_mode='coalesce'
+      vsan_name='FcoE'
+      vsan_id_a='10'
+      vsan_id_b='20'
+      fcoe_vlan_a='10'
+      fcoe_vlan_b='20'
       zoning_state='disabled'
+      fc_zone_mode='coalesce'
