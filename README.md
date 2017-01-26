@@ -51,6 +51,8 @@ ucspe                      : ok=6    changed=2    unreachable=0    failed=0
 * adding snmp traps
 * adding VSAN's
 * adding VLAN's
+* adding DNS Server IP
+* removing DNS Server IP
 
 ### Playbooks Coming Soon
 NTP configuration, and more system management configuration
