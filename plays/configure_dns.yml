@@ -1,0 +1,13 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Add DNS Entry {{ucsm_ip}}
+      ucs_dns:
+        ip={{ucsm_ip}}
+        login={{ucsm_login}}
+        password={{ucsm_pw}}
+        dns_ip='192.168.1.2'
+        state='add'
