@@ -1,0 +1,13 @@
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Add NTP Entry {{ucsm_ip}}
+      ucs_ntp:
+        ip={{ucsm_ip}}
+        login={{ucsm_login}}
+        password={{ucsm_pw}}
+        ntp_address='192.168.1.1'
+        state='add'
