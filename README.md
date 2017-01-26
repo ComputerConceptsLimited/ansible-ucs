@@ -17,7 +17,7 @@ http://tiny.cc/ucsm-slack
 * Run the command and include where the full location where you put ansible-ucs repo: export PYTHONPATH="${PYTHONPATH}:/ansible-ucs"
 
 #### To run a playbook:
-ansible-playbook site.yml
+ansible-playbook site.yml or run them from the plays/dir or create your own
 
 PLAY [ucs] *********************************************************************
 
