@@ -132,8 +132,7 @@ def ucs_add_vsan(module):
     try:
         ucsm.login()
         results['logged_in'] = True
-    except Exception as e:
-        module.fail_json(msg=e)
+    except Exception:
         module.fail_json(msg="login failed")
 
     mo = FabricVsan(parent_mo_or_dn="fabric/san", name=vsan_name, fcoe_vlan=fcoe_vlan, policy_owner="local",
@@ -144,15 +143,15 @@ def ucs_add_vsan(module):
         ucsm.handle.commit()
         results['changed'] = True
 
-    except Exception as e:
-        #module.fail_json(msg=e)
+    except Exception:
         module.fail_json(msg="vsan addition failed")
         results['changed'] = False
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
-    except Exception as e:
+
+    except Exception:
         module.fail_json(msg="logout failed")
 
 
@@ -180,7 +179,7 @@ def ucs_add_single_vsan(module):
         results['logged_in'] = True
     except Exception as e:
         module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+
 
     mo = FabricVsan(parent_mo_or_dn=configured_fi, name=vsan_name, fcoe_vlan=fcoe_vlan, policy_owner="local",
                     fc_zone_sharing_mode=fc_zone_mode, zoning_state=zoning_state, id=vsan_id)
@@ -191,15 +190,14 @@ def ucs_add_single_vsan(module):
         results['changed'] = True
 
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="vsan addition failed")
+        module.fail_json(msg=e)
         results['changed'] = False
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
 
     return results
@@ -228,8 +226,8 @@ def ucs_add_vsan_seperate(module):
         ucsm.login()
         results['logged_in'] = True
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+        module.fail_json(msg=e)
+
 
 
     #Setup SAN A
@@ -256,7 +254,7 @@ def ucs_add_vsan_seperate(module):
         results['changed'] = True
 
     except Exception as e:
-        module.fail_json(msg="vsan for FI B configuration failed")
+        module.fail_json(msg=e)
         results['changed'] = False
 
 

@@ -66,8 +66,7 @@ def ucs_add_ntp(module):
         ucsm.login()
         results['logged_in'] = True
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+        module.fail_json(msg=e)
 
     mo = CommNtpProvider(parent_mo_or_dn="sys/svc-ext/datetime-svc", name=ntp_address, descr="")
 
@@ -77,15 +76,14 @@ def ucs_add_ntp(module):
         results['changed'] = True
 
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="ntp addition failed")
+        module.fail_json(msg=e)
         results['changed'] = False
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
 
     return results
@@ -106,8 +104,8 @@ def ucs_remove_ntp(module):
         ucsm.login()
         results['logged_in'] = True
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+        module.fail_json(msg=e)
+
 
     mo = ucsm.handle.query_dn("sys/svc-ext/datetime-svc/ntp-" + str(ntp_address))
 
@@ -117,15 +115,14 @@ def ucs_remove_ntp(module):
         results['changed'] = True
 
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="ntp deletion failed")
+        module.fail_json(msg=e)
         results['changed'] = False
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
 
     return results

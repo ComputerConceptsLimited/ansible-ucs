@@ -115,8 +115,7 @@ def ucs_disable_snmp(module):
         ucsm.login()
         results['logged_in'] = True
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+        module.fail_json(msg=e)
 
     obj = ucsm.handle.query_dn("sys/svc-ext")
     mo = CommSnmp(parent_mo_or_dn=obj, descr="", sys_location="", community="",
@@ -128,15 +127,14 @@ def ucs_disable_snmp(module):
         results['changed'] = True
 
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="disable snmp failed.")
+        module.fail_json(msg=e)
 
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
     return results
 
@@ -161,8 +159,7 @@ def ucs_enable_snmp(module):
         ucsm.login()
         results['logged_in'] = True
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+        module.fail_json(msg=e)
 
 
 
@@ -179,15 +176,14 @@ def ucs_enable_snmp(module):
         results['changed'] = True
 
     except Exception as e:
-        #module.jail_json(msg=e)
-        module.fail_json(msg="snmp configuration failed.")
+        module.fail_json(msg=e)
 
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
     return results
 
@@ -212,7 +208,6 @@ def ucs_add_snmp_trap(module):
         results['logged_in'] = True
     except Exception as e:
         module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
 
 
     mo = CommSnmpTrap(parent_mo_or_dn="sys/svc-ext/snmp-svc", v3_privilege=v3_priv, hostname=hostname,
@@ -225,14 +220,13 @@ def ucs_add_snmp_trap(module):
         results['changed'] = True
 
     except Exception as e:
-        #module.jail_json(msg=e)
-        module.fail_json(msg="snmp trap configuration failed")
+        module.fail_json(msg=e)
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
     return results
 

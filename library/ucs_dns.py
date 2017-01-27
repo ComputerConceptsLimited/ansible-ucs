@@ -67,7 +67,7 @@ def ucs_add_dns(module):
         results['logged_in'] = True
     except Exception as e:
         module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+
 
     mo = CommDnsProvider(parent_mo_or_dn="sys/svc-ext/dns-svc", name=dns_ip, descr="")
 
@@ -78,14 +78,13 @@ def ucs_add_dns(module):
 
     except Exception as e:
         module.fail_json(msg=e)
-        module.fail_json(msg="dns configuration failed")
         results['changed'] = False
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
 
     return results
@@ -107,7 +106,7 @@ def ucs_remove_dns(module):
         results['logged_in'] = True
     except Exception as e:
         module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+
 
     mo = ucsm.handle.query_dn("sys/svc-ext/dns-svc/dns-" + dns_ip)
 
@@ -118,14 +117,13 @@ def ucs_remove_dns(module):
 
     except Exception as e:
         module.fail_json(msg=e)
-        module.fail_json(msg="dns configuration failed")
         results['changed'] = False
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
 
     return results

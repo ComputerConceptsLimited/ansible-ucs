@@ -139,14 +139,12 @@ def ucs_add_vlan(module):
         ucsm.login()
         results['logged_in'] = True
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+        module.fail_json(msg=e)
 
 
-
-
-
-
+#
+# Checking if configured for lan seperate per FI or not.
+#
 
     if configure_lan_seperate == 'no':
         mo = FabricVlan(parent_mo_or_dn="fabric/lan", sharing="none", name=vlan_name + str(vlan_id), id=vlan_id,
@@ -159,8 +157,7 @@ def ucs_add_vlan(module):
             results['changed'] = True
 
         except Exception as e:
-            #module.fail_json(msg=e)
-            module.fail_json(msg="vlan addition failed")
+            module.fail_json(msg=e)
             results['changed'] = False
     else:
         mo = FabricVlan(parent_mo_or_dn="fabric/lan/A", sharing="none", name=vlan_name + str(vlan_a), id=str(vlan_a),
@@ -181,15 +178,14 @@ def ucs_add_vlan(module):
             results['changed'] = True
 
         except Exception as e:
-            #module.fail_json(msg=e)
-            module.fail_json(msg="vlan addition failed")
+            module.fail_json(msg=e)
             results['changed'] = False
 
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
 
 
@@ -218,8 +214,8 @@ def ucs_add_vlan_range(module):
         ucsm.login()
         results['logged_in'] = True
     except Exception as e:
-        #module.fail_json(msg=e)
-        module.fail_json(msg="login failed")
+        module.fail_json(msg=e)
+
 
     if vlan_range:
         vlan_range_split = vlan_range.split('-')
@@ -253,8 +249,7 @@ def ucs_add_vlan_range(module):
                 results['changed'] = True
 
             except Exception as e:
-                module.fail_json(msg=vlan)
-                module.fail_json(msg="vlan addition failed")
+                module.fail_json(msg=e)
                 results['changed'] = False
     else:
 
@@ -269,8 +264,7 @@ def ucs_add_vlan_range(module):
 
 
             except Exception as e:
-                #module.fail_json(msg=e)
-                module.fail_json(msg="vlan addition failed")
+                module.fail_json(msg=e)
                 results['changed'] = False
 
         for vlan in vlan_b_list:
@@ -283,8 +277,7 @@ def ucs_add_vlan_range(module):
                 results['changed'] = True
 
             except Exception as e:
-                #module.fail_json(msg=e)
-                module.fail_json(msg="vlan addition failed")
+                module.fail_json(msg=e)
                 results['changed'] = False
 
     #Committing Changes
@@ -296,7 +289,7 @@ def ucs_add_vlan_range(module):
         ucsm.handle.logout()
         results['logged_out'] = True
     except Exception as e:
-        module.fail_json(msg="logout failed")
+        module.fail_json(msg=e)
 
     return results
 
