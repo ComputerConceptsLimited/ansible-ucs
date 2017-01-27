@@ -12,11 +12,14 @@ Feel free to join chat for questions or enhancement requests:
 
 http://tiny.cc/ucsm-slack
 
+## Emulate UCS Manager
+You can visit https://communities.cisco.com/docs/DOC-37827 for more information on how to have a virtual UCS Manager for testing this project as well before issuing it to your production.
+
 ### Usage
 * Update library/inventory file with UCSM login info.  
 * Run the command and include where the full location where you put ansible-ucs repo: export PYTHONPATH="${PYTHONPATH}:/ansible-ucs"
 
-#### To run a playbook:
+### To run a playbook:
 ansible-playbook site.yml or run them from the plays/dir or create your own
 
 PLAY [ucs] *********************************************************************
