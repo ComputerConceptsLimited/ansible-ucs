@@ -22,15 +22,18 @@ You can visit https://communities.cisco.com/docs/DOC-37827 for more information 
 ### To run a playbook:
 ansible-playbook site.yml or run them from the plays/dir or create your own
 
-Currently site.yml will configure 3 NTP servers of 192.168.1-3 for testing.
-
+Currently site.yml will configure callhome and 3 NTP servers of 192.168.1-3 for testing.
 PLAY [ucs] *******************************************************************************************************************************************************************
 
-TASK [Add NTP Entry X.X.X.X] *******************************************************************************************************************************************
+TASK [admin : Add NTP Entry X.X.X.X] *********************************************************************************************************************************
+changed: [ucspe]
+
+TASK [admin : Configure Callhome X.X.X.X] ******************************************************************************************************************************
 changed: [ucspe]
 
 PLAY RECAP *******************************************************************************************************************************************************************
-ucspe                      : ok=1    changed=1    unreachable=0    failed=0                        : ok=6    changed=2    unreachable=0    failed=0
+ucspe                      : ok=2    changed=2    unreachable=0    failed=0
+
 
 ### Current Playbooks/Supported Modules
 * configuring of callhome
