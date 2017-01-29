@@ -22,30 +22,15 @@ You can visit https://communities.cisco.com/docs/DOC-37827 for more information 
 ### To run a playbook:
 ansible-playbook site.yml or run them from the plays/dir or create your own
 
-PLAY [ucs] *********************************************************************
+Currently site.yml will configure 3 NTP servers of 192.168.1-3 for testing.
 
-TASK [Login X.X.X.X] *****************************************************
-ok: [ucspe]
+PLAY [ucs] *******************************************************************************************************************************************************************
 
-TASK [Configure Callhome X.X.X.X] ****************************************
+TASK [Add NTP Entry X.X.X.X] *******************************************************************************************************************************************
 changed: [ucspe]
 
-TASK [Logout X.X.X.X] ****************************************************
-ok: [ucspe]
-
-PLAY [ucs] *********************************************************************
-
-TASK [Login X.X.X.X] *****************************************************
-ok: [ucspe]
-
-TASK [Configure SNMP X.X.X.X] ********************************************
-changed: [ucspe]
-
-TASK [Logout X.X.X.X] ****************************************************
-ok: [ucspe]
-
-PLAY RECAP *********************************************************************
-ucspe                      : ok=6    changed=2    unreachable=0    failed=0
+PLAY RECAP *******************************************************************************************************************************************************************
+ucspe                      : ok=1    changed=1    unreachable=0    failed=0                        : ok=6    changed=2    unreachable=0    failed=0
 
 ### Current Playbooks/Supported Modules
 * configuring of callhome
@@ -56,8 +41,8 @@ ucspe                      : ok=6    changed=2    unreachable=0    failed=0
 * adding VLAN's
 * adding DNS Server IP
 * removing DNS Server IP
-* adding NTP server
-* remove NTP server
+* adding NTP servers
+* remove NTP servers
 
 ### Playbooks/Modules Coming Soon
 Uplink Configuration
