@@ -7,6 +7,8 @@ Download and install the UCS Python SDK:
 
 https://communities.cisco.com/docs/DOC-64378
 
+pip install ucsmsdk
+
 ### UCS Ansible Slack Chat
 Feel free to join chat for questions or enhancement requests:
 
