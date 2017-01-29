@@ -56,6 +56,7 @@ def ucs_add_ntp(module):
     ucsm_ip = module.params.get('ip')
     ucsm_pw = module.params.get('password')
     ucsm_login = module.params.get('login')
+    ntp_servers = ansible['ntp_servers']
 
     ucsm = UCS(ucsm_ip, ucsm_login, ucsm_pw)
 
@@ -68,16 +69,18 @@ def ucs_add_ntp(module):
     except Exception as e:
         module.fail_json(msg=e)
 
-    mo = CommNtpProvider(parent_mo_or_dn="sys/svc-ext/datetime-svc", name=ntp_address, descr="")
+    for ntp_addr in ntp_servers.splitlines():
+        if ntp_addr:
+            mo = CommNtpProvider(parent_mo_or_dn="sys/svc-ext/datetime-svc", name=ntp_addr, descr="")
 
-    try:
-        ucsm.handle.add_mo(mo)
-        ucsm.handle.commit()
-        results['changed'] = True
+        try:
+            ucsm.handle.add_mo(mo)
+            ucsm.handle.commit()
+            results['changed'] = True
 
-    except Exception as e:
-        module.fail_json(msg=e)
-        results['changed'] = False
+        except Exception as e:
+            module.fail_json(msg=e)
+            results['changed'] = False
 
     try:
         ucsm.handle.logout()
@@ -94,7 +97,7 @@ def ucs_remove_ntp(module):
     ucsm_ip = module.params.get('ip')
     ucsm_pw = module.params.get('password')
     ucsm_login = module.params.get('login')
-
+    ntp_servers = ansible['ntp_servers']
     ucsm = UCS(ucsm_ip, ucsm_login, ucsm_pw)
 
     results = {}
@@ -106,17 +109,18 @@ def ucs_remove_ntp(module):
     except Exception as e:
         module.fail_json(msg=e)
 
+    for ntp_addr in ntp_servers.splitlines():
+        if ntp_addr:
+            mo = ucsm.handle.query_dn("sys/svc-ext/datetime-svc/ntp-" + str(ntp_addr))
 
-    mo = ucsm.handle.query_dn("sys/svc-ext/datetime-svc/ntp-" + str(ntp_address))
+        try:
+            ucsm.handle.remove_mo(mo)
+            ucsm.handle.commit()
+            results['changed'] = True
 
-    try:
-        ucsm.handle.remove_mo(mo)
-        ucsm.handle.commit()
-        results['changed'] = True
-
-    except Exception as e:
-        module.fail_json(msg=e)
-        results['changed'] = False
+        except Exception as e:
+            module.fail_json(msg=e)
+            results['changed'] = False
 
     try:
         ucsm.handle.logout()
@@ -131,7 +135,7 @@ def ucs_remove_ntp(module):
 def main():
     module = AnsibleModule(
         argument_spec     = dict(
-        ntp_address       = dict(required=True),
+        ntp_servers       = dict(required=True, default=[], type='list'),
         state             = dict(required=True, choices=['add', 'remove']),
         ip                = dict(required=True),
         password          = dict(required=True),

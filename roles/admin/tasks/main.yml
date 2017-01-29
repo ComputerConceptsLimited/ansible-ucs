@@ -1,0 +1,10 @@
+---
+
+
+- name: Add NTP Entry {{ucsm_ip}}
+    ucs_ntp:
+      ntp_servers: "{{ ntp_servers }}"
+      ip={{ucsm_ip}}
+      login={{ucsm_login}}
+      password={{ucsm_pw}}
+      state='add'
