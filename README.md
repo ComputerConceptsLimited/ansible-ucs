@@ -23,6 +23,7 @@ You can visit https://communities.cisco.com/docs/DOC-37827 for more information 
 ansible-playbook site.yml or run them from the plays/dir or create your own
 
 Currently site.yml will configure callhome and 3 NTP servers of 192.168.1-3 for testing.
+
 PLAY [ucs] ********************************************************************************************************************
 
 TASK [admin : Add NTP Entry 14.17.106.163] ************************************************************************************
