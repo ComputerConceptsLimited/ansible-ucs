@@ -1,2 +1,6 @@
-# file: site.yml
-- include: plays/test_vlan.yml
+---
+- hosts: ucs
+  connection: local
+  gather_facts: no
+  roles:
+  - admin

@@ -9,5 +9,5 @@
         ip={{ucsm_ip}}
         login={{ucsm_login}}
         password={{ucsm_pw}}
-        ntp_address='192.168.1.1'
+        ntp_servers={{ ntp_servers }}
         state='remove'

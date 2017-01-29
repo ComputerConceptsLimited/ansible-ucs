@@ -16,9 +16,9 @@ description:
 author: Brian Hopkins (@br1anhopkins)
 extends_documentation_fragment: ucs
 options:
-    ntp_address:
+    ntp_servers:
         description:
-            - The NTP IP/Name of the server you are adding.
+            - List of NTP IP's/Name's of the server's you are adding. ("ip", "ip")
         required: true
         default: null
     state:
@@ -35,7 +35,9 @@ EXAMPLES = '''
         ip={{ucsm_ip}}
         login={{ucsm_login}}
         password={{ucsm_pw}}
-        ntp_address='192.168.1.2'
+        ntp_servers:
+          - "192.168.1.1"
+          - "192.168.1.2"
         state='add'
 
 - name: Delete NTP Entry {{ucsm_ip}}
@@ -43,7 +45,9 @@ EXAMPLES = '''
         ip={{ucsm_ip}}
         login={{ucsm_login}}
         password={{ucsm_pw}}
-        ntp_address='192.168.1.1'
+        ntp_servers:
+          - "192.168.1.1"
+          - "192.168.1.2"
         state='remove'
 '''
 
@@ -52,11 +56,10 @@ from library.ucs import UCS
 
 
 def ucs_add_ntp(module):
-    ntp_address = module.params.get('ntp_address')
     ucsm_ip = module.params.get('ip')
     ucsm_pw = module.params.get('password')
     ucsm_login = module.params.get('login')
-    ntp_servers = ansible['ntp_servers']
+    ntp_servers = module.params['ntp_servers']
 
     ucsm = UCS(ucsm_ip, ucsm_login, ucsm_pw)
 
@@ -69,7 +72,7 @@ def ucs_add_ntp(module):
     except Exception as e:
         module.fail_json(msg=e)
 
-    for ntp_addr in ntp_servers.splitlines():
+    for ntp_addr in ntp_servers:
         if ntp_addr:
             mo = CommNtpProvider(parent_mo_or_dn="sys/svc-ext/datetime-svc", name=ntp_addr, descr="")
 
@@ -93,11 +96,10 @@ def ucs_add_ntp(module):
 
 
 def ucs_remove_ntp(module):
-    ntp_address = module.params.get('ntp_address')
     ucsm_ip = module.params.get('ip')
     ucsm_pw = module.params.get('password')
     ucsm_login = module.params.get('login')
-    ntp_servers = ansible['ntp_servers']
+    ntp_servers = module.params['ntp_servers']
     ucsm = UCS(ucsm_ip, ucsm_login, ucsm_pw)
 
     results = {}
@@ -109,7 +111,7 @@ def ucs_remove_ntp(module):
     except Exception as e:
         module.fail_json(msg=e)
 
-    for ntp_addr in ntp_servers.splitlines():
+    for ntp_addr in ntp_servers:
         if ntp_addr:
             mo = ucsm.handle.query_dn("sys/svc-ext/datetime-svc/ntp-" + str(ntp_addr))
 
@@ -135,7 +137,7 @@ def ucs_remove_ntp(module):
 def main():
     module = AnsibleModule(
         argument_spec     = dict(
-        ntp_servers       = dict(required=True, default=[], type='list'),
+        ntp_servers       = dict(default=[], type='list'),
         state             = dict(required=True, choices=['add', 'remove']),
         ip                = dict(required=True),
         password          = dict(required=True),
@@ -144,7 +146,7 @@ def main():
     )
 
     state = module.params.get('state')
-
+    ntp_servers = module.params['ntp_servers']
 
     if state == 'add':
         results = ucs_add_ntp(module)
