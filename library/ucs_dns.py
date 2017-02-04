@@ -68,17 +68,18 @@ def ucs_add_dns(module):
     except Exception as e:
         module.fail_json(msg=e)
 
+    for ip in dns_ip:
+        if ip:
+            mo = CommDnsProvider(parent_mo_or_dn="sys/svc-ext/dns-svc", name=ip, descr="")
 
-    mo = CommDnsProvider(parent_mo_or_dn="sys/svc-ext/dns-svc", name=dns_ip, descr="")
+        try:
+            ucsm.handle.add_mo(mo)
+            ucsm.handle.commit()
+            results['changed'] = True
 
-    try:
-        ucsm.handle.add_mo(mo)
-        ucsm.handle.commit()
-        results['changed'] = True
-
-    except Exception as e:
-        module.fail_json(msg=e)
-        results['changed'] = False
+        except Exception as e:
+            module.fail_json(msg=e)
+            results['changed'] = False
 
     try:
         ucsm.handle.logout()
@@ -108,16 +109,18 @@ def ucs_remove_dns(module):
         module.fail_json(msg=e)
 
 
-    mo = ucsm.handle.query_dn("sys/svc-ext/dns-svc/dns-" + dns_ip)
+    for ip in dns_ip:
+        if ip:
+            mo = ucsm.handle.query_dn("sys/svc-ext/dns-svc/dns-" + ip)
 
-    try:
-        ucsm.handle.remove_mo(mo)
-        ucsm.handle.commit()
-        results['changed'] = True
+        try:
+            ucsm.handle.remove_mo(mo)
+            ucsm.handle.commit()
+            results['changed'] = True
 
-    except Exception as e:
-        module.fail_json(msg=e)
-        results['changed'] = False
+        except Exception as e:
+            module.fail_json(msg=e)
+            results['changed'] = False
 
     try:
         ucsm.handle.logout()
@@ -132,7 +135,7 @@ def ucs_remove_dns(module):
 def main():
     module = AnsibleModule(
         argument_spec     = dict(
-        dns_ip              = dict(required=True),
+        dns_ip            = dict(default=[], type='list'),
         state             = dict(required=True, choices=['add', 'remove']),
         ip                = dict(required=True),
         password          = dict(required=True),
