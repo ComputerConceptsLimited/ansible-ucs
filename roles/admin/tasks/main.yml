@@ -9,6 +9,14 @@
     password: "{{ucsm_pw}}"
     state: "add"
 
+- name: Add DNS Entry {{ucsm_ip}}
+  ucs_dns:
+    dns_ip: "{{ dns_ip}}"
+    ip: "{{ucsm_ip}}"
+    login: "{{ucsm_login}}"
+    password: "{{ucsm_pw}}"
+    state: "add"
+
 - name: Configure Callhome {{ucsm_ip}}
   ucs_callhome:
     admin_state="on"
