@@ -5,7 +5,7 @@ from ucsmsdk.ucshandle import UcsHandle
 
 class UCS(object):
     def __init__(self, ucsm_ip="", ucsm_login="", ucsm_pw=""):
-        self.handle = UcsHandle(ucsm_ip, ucsm_pw ,ucsm_login)
+        self.handle = UcsHandle(ucsm_ip, ucsm_login ,ucsm_pw)
         self.ucsm_ip = ucsm_ip
         self.ucsm_pw = ucsm_pw
         self.ucsm_login = ucsm_login
