@@ -115,7 +115,23 @@ EXAMPLES = '''
 
 
 from ucsmsdk.mometa.fabric.FabricVlan import FabricVlan
-from library.ucs import UCS
+from ucsmsdk.ucshandle import UcsHandle
+
+class UCS(object):
+    def __init__(self, ucsm_ip="", ucsm_login="", ucsm_pw=""):
+        self.handle = UcsHandle(ucsm_ip, ucsm_login ,ucsm_pw)
+        self.ucsm_ip = ucsm_ip
+        self.ucsm_pw = ucsm_pw
+        self.ucsm_login = ucsm_login
+
+
+    def login(self):
+        self.handle.login()
+
+
+
+    def logout(self):
+        self.handle.logout()
 
 
 def ucs_add_vlan(module):
@@ -152,9 +168,15 @@ def ucs_add_vlan(module):
                     compression_type="included")
 
         try:
-            ucsm.handle.add_mo(mo)
-            ucsm.handle.commit()
-            results['changed'] = True
+            vlan_name_full = vlan_name + str(vlan_id)
+            filter_string = '(name, {0}, type="eq")'.format(vlan_name_full)
+            vlan_exists = ucsm.handle.query_classid(class_id="fabricVlan",filter_str=filter_string)
+            if not vlan_exists:
+                ucsm.handle.add_mo(mo)
+                ucsm.handle.commit()
+                results['changed'] = True
+            else:
+                results['changed'] = False
 
         except Exception as e:
             module.fail_json(msg=e)
@@ -164,23 +186,33 @@ def ucs_add_vlan(module):
                         mcast_policy_name=mcast_policy_name, policy_owner=policy_owner, default_net="no",
                         pub_nw_name="",
                         compression_type="included")
-        ucsm.handle.add_mo(mo)
+
+        vlan_a_name_full = vlan_name + str(vlan_a)
+        filter_a_string = '(name, {0}, type="eq")'.format(vlan_a_name_full)
+        a_exists = ucsm.handle.query_classid(class_id="fabricVlan",filter_str=filter_a_string)
+        if not a_exists:
+                ucsm.handle.add_mo(mo)
 
         mo = FabricVlan(parent_mo_or_dn="fabric/lan/B", sharing="none", name=vlan_name + str(vlan_b), id=str(vlan_b),
                         mcast_policy_name=mcast_policy_name, policy_owner=policy_owner, default_net="no",
                         pub_nw_name="",
                         compression_type="included")
-
-        ucsm.handle.add_mo(mo)
+        vlan_b_name_full = vlan_name + str(vlan_b)
+        filter_b_string = '(name, {0}, type="eq")'.format(vlan_b_name_full)
+        b_exists = ucsm.handle.query_classid(class_id="fabricVlan",filter_str=filter_b_string)
+        if not b_exists:
+            ucsm.handle.add_mo(mo)
 
         try:
-            ucsm.handle.commit()
-            results['changed'] = True
+            if not a_exists or not b_exists:
+                ucsm.handle.commit()
+                results['changed'] = True
+            else:
+                results['changed'] = False
 
         except Exception as e:
             module.fail_json(msg=e)
             results['changed'] = False
-
     try:
         ucsm.handle.logout()
         results['logged_out'] = True
@@ -346,3 +378,4 @@ def main():
 from ansible.module_utils.basic import *
 if __name__ == '__main__':
     main()
+
